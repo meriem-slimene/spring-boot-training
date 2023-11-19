@@ -1,37 +1,45 @@
 package com.alibou.demo.domain.address.impl;
 
-import com.alibou.demo.domain.address.AddressService;
 import com.alibou.demo.domain.address.Address;
+import com.alibou.demo.domain.address.AddressMapper;
 import com.alibou.demo.domain.address.AddressRepository;
+import com.alibou.demo.domain.address.AddressRequest;
+import com.alibou.demo.domain.address.AddressResponse;
+import com.alibou.demo.domain.address.AddressService;
 import com.alibou.demo.domain.student.Student;
 import com.alibou.demo.domain.student.StudentRepository;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
   private final AddressRepository addressRepository;
   private final StudentRepository studentRepository;
+  private final AddressMapper addressMapper;
 
-  public AddressServiceImpl(AddressRepository addressRepository, StudentRepository studentRepository) {
-    this.addressRepository = addressRepository;
-    this.studentRepository = studentRepository;
+  @Override
+  public void save(AddressRequest address) {
+    this.addressRepository.save(addressMapper.toAddress(address));
   }
 
   @Override
-  public void save(Address address) {
-    this.addressRepository.save(address);
-  }
-
-  @Override
-  public Address findById(Integer id) {
+  public AddressResponse findById(Integer id) {
     return this.addressRepository.findById(id)
-        .orElse(null);
+        .map(addressMapper::toAddressResponse)
+        .orElse(new AddressResponse());
   }
+
   @Override
-  public List<Address> findAll() {
-    return this.addressRepository.findAll();
+  public List<AddressResponse> findAll() {
+
+    return this.addressRepository.findAll()
+        .stream()
+        .map(addressMapper::toAddressResponse)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -40,9 +48,12 @@ public class AddressServiceImpl implements AddressService {
   }
 
   @Override
-  public List<Address> findAddressByStudentId(Integer studentId) {
+  public List<AddressResponse> findAddressByStudentId(Integer studentId) {
     Student student = studentRepository.findById(studentId).orElse(null);
-    return addressRepository.findByStudent(student);
+    return addressRepository.findByStudent(student)
+        .stream()
+        .map(addressMapper::toAddressResponse)
+        .collect(Collectors.toList());
   }
 
 }

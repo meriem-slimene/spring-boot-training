@@ -19,24 +19,24 @@ public class AddressController {
   }
 
   @GetMapping("/{address-id}")
-  public Address findById(
+  public AddressResponse findById(
       @PathVariable("address-id") Integer addressId) {
     return addressService.findById(addressId);
   }
 
   @PostMapping
-  public void save(@RequestBody Address address) {
+  public void save(@RequestBody AddressRequest address) {
     addressService.save(address);
   }
 
   @GetMapping("/student/{student-id}")
-  public List<Address> findByFirstSubject(
+  public List<AddressResponse> findByFirstSubject(
       @PathVariable(value = "student-id") Integer studentId) {
     return addressService.findAddressByStudentId(studentId);
   }
 
   @GetMapping
-  public List<Address> findAll() {
+  public List<AddressResponse> findAll() {
     return addressService.findAll();
   }
 }

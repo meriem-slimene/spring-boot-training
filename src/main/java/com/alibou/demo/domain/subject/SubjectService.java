@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface SubjectService {
 
-    void save(Subject subject);
-    Subject findById(Integer id);
-    List<Subject> findAll();
-    Subject findByName(String name);
+    void save(SubjectRequest subject);
+    SubjectResponse findById(Integer id);
+    List<SubjectResponse> findAll();
+    SubjectResponse findByName(String name);
     void deleteById(Integer id);
 
 }

@@ -24,18 +24,18 @@ public class ChapterController {
   }
 
   @PostMapping
-  public void save(@RequestBody Chapter chapter) {
+  public void save(@RequestBody ChapterRequest chapter) {
     chapterService.save(chapter);
   }
 
   @GetMapping("/search")
-  public List<Chapter> findByFirstSubject(
+  public List<ChapterResponse> findByFirstSubject(
       @RequestParam(value = "subjectId") Integer subjectId) {
     return chapterService.findChaptersBySubjectId(subjectId);
   }
 
   @GetMapping
-  public List<Chapter> findAll() {
+  public List<ChapterResponse> findAll() {
     return chapterService.findAll();
   }
 }

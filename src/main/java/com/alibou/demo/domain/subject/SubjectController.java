@@ -20,22 +20,22 @@ public class SubjectController {
   }
 
   @PostMapping
-  public void save(@RequestBody Subject subject) {
+  public void save(@RequestBody SubjectRequest subject) {
     subjectService.save(subject);
   }
 
   @GetMapping("/{subject-id}")
-  public Subject findById(@PathVariable("subject-id") Integer subjectId) {
+  public SubjectResponse findById(@PathVariable("subject-id") Integer subjectId) {
     return subjectService.findById(subjectId);
   }
 
   @GetMapping("/search")
-  public List<Subject> findByName(@RequestParam(value = "name") String name) {
+  public List<SubjectResponse> findByName(@RequestParam(value = "name") String name) {
     return subjectService.findAll();
   }
 
   @GetMapping
-  public List<Subject> findAll() {
+  public List<SubjectResponse> findAll() {
     return subjectService.findAll();
   }
 }

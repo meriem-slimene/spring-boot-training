@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface AddressService {
 
-    void save(Address address);
-    Address findById(Integer id);
-    List<Address> findAll();
+    void save(AddressRequest addressRequest);
+    AddressResponse findById(Integer id);
+    List<AddressResponse> findAll();
     void deleteById(Integer id);
-    List<Address> findAddressByStudentId(Integer studentId);
+    List<AddressResponse> findAddressByStudentId(Integer studentId);
 
 }
